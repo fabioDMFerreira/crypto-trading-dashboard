@@ -6,27 +6,70 @@ export interface ApplicationStateAggregatedByDate {
     hour?: number;
     minute?: number;
   };
-  average: number;
-  standardDeviation: number;
-  currentChange: number
-  lowerBollingerBand: number;
-  higherBollingerBand: number;
+  price:number;
+  priceAverage: number;
+  priceStandardDeviation: number;
+  priceUpperLimit: number;
+  priceLowerLimit: number;
+
+  change:number;
+  changeAverage: number;
+  changeStandardDeviation: number;
+  changeUpperLimit: number;
+  changeLowerLimit: number;
+
+  acceleration:number;
+  accelerationAverage: number;
+  accelerationStandardDeviation: number;
+  accelerationUpperLimit: number;
+  accelerationLowerLimit: number;
 
   accountAmount:number;
 }
 
 export interface ApplicationState {
-  average: [number, number][]
-  standardDeviation: [number, number][]
-  lowerBollingerBand: [number, number][]
-  higherBollingerBand: [number, number][]
-  currentChange: [number, number][]
+  price: [number, number][]
+  priceAverage: [number, number][]
+  priceStandardDeviation: [number, number][]
+  priceUpperLimit: [number, number][]
+  priceLowerLimit: [number, number][]
+
+  change: [number, number][]
+  changeAverage: [number, number][]
+  changeStandardDeviation: [number, number][]
+  changeUpperLimit: [number, number][]
+  changeLowerLimit: [number, number][]
+
+  acceleration: [number, number][]
+  accelerationAverage: [number, number][]
+  accelerationStandardDeviation: [number, number][]
+  accelerationUpperLimit: [number, number][]
+  accelerationLowerLimit: [number, number][]
+
   accountAmount: [number, number][]
 }
 
 export default (data: ApplicationStateAggregatedByDate[]): ApplicationState => {
   const defaultResult: ApplicationState = {
-    average: [], standardDeviation: [], higherBollingerBand: [], lowerBollingerBand: [], currentChange: [], accountAmount: [],
+    price: [],
+    priceAverage: [],
+    priceStandardDeviation: [],
+    priceUpperLimit: [],
+    priceLowerLimit: [],
+
+    change: [],
+    changeAverage: [],
+    changeStandardDeviation: [],
+    changeUpperLimit: [],
+    changeLowerLimit: [],
+
+    acceleration: [],
+    accelerationAverage: [],
+    accelerationStandardDeviation: [],
+    accelerationUpperLimit: [],
+    accelerationLowerLimit: [],
+
+    accountAmount: [],
   };
 
   return data
@@ -41,11 +84,24 @@ export default (data: ApplicationStateAggregatedByDate[]): ApplicationState => {
             applicationState._id.minute || 0,
           );
 
-          final.average.push([time, applicationState.average]);
-          final.standardDeviation.push([time, applicationState.standardDeviation]);
-          final.currentChange.push([time, applicationState.currentChange]);
-          final.lowerBollingerBand.push([time, applicationState.lowerBollingerBand]);
-          final.higherBollingerBand.push([time, applicationState.higherBollingerBand]);
+          final.price.push([time, applicationState.price]);
+          final.priceAverage.push([time, applicationState.priceAverage]);
+          final.priceStandardDeviation.push([time, applicationState.priceStandardDeviation]);
+          final.priceUpperLimit.push([time, applicationState.priceUpperLimit]);
+          final.priceLowerLimit.push([time, applicationState.priceLowerLimit]);
+
+          final.change.push([time, applicationState.change]);
+          final.changeAverage.push([time, applicationState.changeAverage]);
+          final.changeStandardDeviation.push([time, applicationState.changeStandardDeviation]);
+          final.changeUpperLimit.push([time, applicationState.changeUpperLimit]);
+          final.changeLowerLimit.push([time, applicationState.changeLowerLimit]);
+
+          final.acceleration.push([time, applicationState.acceleration]);
+          final.accelerationAverage.push([time, applicationState.accelerationAverage]);
+          final.accelerationStandardDeviation.push([time, applicationState.accelerationStandardDeviation]);
+          final.accelerationUpperLimit.push([time, applicationState.accelerationUpperLimit]);
+          final.accelerationLowerLimit.push([time, applicationState.accelerationLowerLimit]);
+
           final.accountAmount.push([time, applicationState.accountAmount]);
 
           return final;

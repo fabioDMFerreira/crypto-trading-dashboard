@@ -10,19 +10,22 @@ import {
 
 type chartKeys = 'buys' | 'sells'
 
-function filterBenchmarkResultByTime(data: BenchmarkOutput, start: number | undefined, end: number | undefined) {
+export function filterBenchmarkResultByTime(data: BenchmarkOutput, start: number | undefined, end: number | undefined) {
   const keys: chartKeys[] = ['buys', 'sells'];
   const newData: any = {};
+
   keys.forEach((key) => {
     if (!data[key]) {
       return;
     }
 
-    newData[key] = [];
+    let startIndex;
+    let endIndex;
+
     if (data[key].length && start) {
       for (let i = 0; i < data[key].length; i++) {
-        if (data[key][i][0] > start) {
-          newData[key] = [...data[key].slice(i)];
+        if (data[key][i][0] >= start) {
+          startIndex = i;
           break;
         }
       }
@@ -30,11 +33,15 @@ function filterBenchmarkResultByTime(data: BenchmarkOutput, start: number | unde
 
     if (data[key].length && end) {
       for (let i = data[key].length - 1; i >= 0; i--) {
-        if (data[key][i][0] < end) {
-          newData[key] = [...newData[key].slice(0, i + 1)];
+        if (data[key][i][0] <= end) {
+          endIndex = i;
           break;
         }
       }
+    }
+
+    if (startIndex !== undefined && endIndex !== undefined) {
+      newData[key] = [...data[key].slice(startIndex, endIndex + 1)];
     }
   });
 
@@ -97,8 +104,8 @@ export default (
     }
 
     if (benchmark) {
-      setBuys(benchmark.output.buys);
-      setSells(benchmark.output.sells);
+      setBuys(benchmark.output.buys.sort(([a], [b]) => a - b));
+      setSells(benchmark.output.sells.sort(([a], [b]) => a - b));
       setAssets(benchmark.output.assets);
     }
   }, [benchmark, setDatesInterval]);
@@ -112,11 +119,24 @@ export default (
         .then((res) => res.json())
         .then(formatApplicationExecutionState)
         .then((data) => ({
-          average: data.average.sort((a, b) => a[0] - b[0]),
-          standardDeviation: data.standardDeviation.sort((a, b) => a[0] - b[0]),
-          currentChange: data.currentChange.sort((a, b) => a[0] - b[0]),
-          lowerBollingerBand: data.lowerBollingerBand.sort((a, b) => a[0] - b[0]),
-          higherBollingerBand: data.higherBollingerBand.sort((a, b) => a[0] - b[0]),
+          price: data.price.sort((a, b) => a[0] - b[0]),
+          priceAverage: data.priceAverage.sort((a, b) => a[0] - b[0]),
+          priceStandardDeviation: data.priceStandardDeviation.sort((a, b) => a[0] - b[0]),
+          priceUpperLimit: data.priceUpperLimit.sort((a, b) => a[0] - b[0]),
+          priceLowerLimit: data.priceLowerLimit.sort((a, b) => a[0] - b[0]),
+
+          change: data.change.sort((a, b) => a[0] - b[0]),
+          changeAverage: data.changeAverage.sort((a, b) => a[0] - b[0]),
+          changeStandardDeviation: data.changeStandardDeviation.sort((a, b) => a[0] - b[0]),
+          changeUpperLimit: data.changeUpperLimit.sort((a, b) => a[0] - b[0]),
+          changeLowerLimit: data.changeLowerLimit.sort((a, b) => a[0] - b[0]),
+
+          acceleration: data.acceleration.sort((a, b) => a[0] - b[0]),
+          accelerationAverage: data.accelerationAverage.sort((a, b) => a[0] - b[0]),
+          accelerationStandardDeviation: data.accelerationStandardDeviation.sort((a, b) => a[0] - b[0]),
+          accelerationUpperLimit: data.accelerationUpperLimit.sort((a, b) => a[0] - b[0]),
+          accelerationLowerLimit: data.accelerationLowerLimit.sort((a, b) => a[0] - b[0]),
+
           accountAmount: data.accountAmount.sort((a, b) => a[0] - b[0]),
         }))
         .then((data) => {

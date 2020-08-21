@@ -48,7 +48,7 @@ export default ({
         <Card.Body>
           <Card.Subtitle>Current Price</Card.Subtitle>
           <Card.Title>
-            {lastApplicationState.state.currentPrice}
+            {lastApplicationState.state.price}
             {' '}
             €
           </Card.Title>
@@ -61,27 +61,27 @@ export default ({
           <ListGroup.Item>
             Average:
             {' '}
-            {lastApplicationState.state.average}
+            {lastApplicationState.state.priceAverage}
           </ListGroup.Item>
           <ListGroup.Item>
             Current Change:
             {' '}
-            {lastApplicationState.state.currentChange}
+            {lastApplicationState.state.change}
           </ListGroup.Item>
           <ListGroup.Item>
             Standard Deviation:
             {' '}
-            {lastApplicationState.state.standardDeviation}
+            {lastApplicationState.state.priceStandardDeviation}
           </ListGroup.Item>
           <ListGroup.Item variant="success">
             Higher Bollinger Band:
             {' '}
-            {lastApplicationState.state.higherBollingerBand}
+            {lastApplicationState.state.priceUpperLimit}
           </ListGroup.Item>
           <ListGroup.Item variant="danger">
             Lower Bollinger Band:
             {' '}
-            {lastApplicationState.state.lowerBollingerBand}
+            {lastApplicationState.state.priceLowerLimit}
           </ListGroup.Item>
         </ListGroup>
       </Col>

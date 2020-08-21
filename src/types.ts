@@ -99,12 +99,25 @@ export interface ApplicationExecutionState {
   'executionId': string,
   'date': Date,
   'state': {
-    'average': number,
-    'standardDeviation': number,
-    'lowerBollingerBand': number,
-    'higherBollingerBand': number,
-    'currentPrice': number,
-    'currentChange': number
+    'price': number,
+    'priceAverage': number,
+    'priceStandardDeviation': number,
+    'priceUpperLimit': number,
+    'priceLowerLimit': number,
+
+    'change': number,
+    'changeAverage': number,
+    'changeStandardDeviation': number,
+    'changeUpperLimit': number,
+    'changeLowerLimit': number,
+
+    'acceleration': number,
+    'accelerationAverage': number,
+    'accelerationStandardDeviation': number,
+    'accelerationUpperLimit': number,
+    'accelerationLowerLimit': number,
+
+    'accountAmount': number,
   }
 }
 
