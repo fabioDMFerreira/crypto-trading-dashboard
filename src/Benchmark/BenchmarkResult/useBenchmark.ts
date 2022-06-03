@@ -137,6 +137,11 @@ export default (
           accelerationUpperLimit: data.accelerationUpperLimit.sort((a, b) => a[0] - b[0]),
           accelerationLowerLimit: data.accelerationLowerLimit.sort((a, b) => a[0] - b[0]),
 
+          volume: data.volume.sort((a, b) => a[0] - b[0]),
+          volumeAverage: data.volumeAverage.sort((a, b) => a[0] - b[0]),
+          volumeUpperLimit: data.volumeUpperLimit.sort((a, b) => a[0] - b[0]),
+          volumeLowerLimit: data.volumeLowerLimit.sort((a, b) => a[0] - b[0]),
+
           accountAmount: data.accountAmount.sort((a, b) => a[0] - b[0]),
         }))
         .then((data) => {

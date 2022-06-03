@@ -8,8 +8,8 @@ import { DatesInterval } from '../../types';
 
 interface ChartProps {
   prices: [number, number][]
-  buys: [number, number][]
-  sells: [number, number][]
+  buys?: [number, number][]
+  sells?: [number, number][]
   applicationState?: ApplicationState
   setDatesInterval: (interval: DatesInterval) => void
 }
@@ -31,6 +31,9 @@ export default ({
   const options: Highcharts.Options = {
     chart: {
       zoomType: 'x',
+    },
+    title: {
+      text: '',
     },
     xAxis: {
       type: 'datetime',
@@ -60,6 +63,7 @@ export default ({
       { opposite: true },
       { opposite: true },
       { opposite: true },
+      { opposite: true },
     ],
     tooltip: {
       shared: true,
@@ -70,7 +74,12 @@ export default ({
       type: 'line',
       data: prices,
       color: 'rgba(83, 83, 223, .5)',
-    }, {
+    }],
+  };
+
+  if (buys && options.series) {
+    options.series = options.series.concat([{
+      yAxis: 0,
       name: 'Buys',
       type: 'scatter',
       data: buys,
@@ -82,20 +91,27 @@ export default ({
       tooltip: {
         pointFormat: 'x: <b>{point.x:%d-%m-%y %H:%M:%S}</b><br/>y: <b>{point.y}</b><br/>',
       },
-    }, {
-      name: 'Sells',
-      type: 'scatter',
-      data: sells,
-      color: 'rgba(223, 83, 83, .5)',
-      marker: {
-        radius: 5,
-        symbol: 'circle',
+    }]);
+  }
+
+  if (sells && options.series) {
+    options.series = options.series.concat([
+      {
+        yAxis: 0,
+        name: 'Sells',
+        type: 'scatter',
+        data: sells,
+        color: 'rgba(223, 83, 83, .5)',
+        marker: {
+          radius: 5,
+          symbol: 'circle',
+        },
+        tooltip: {
+          pointFormat: 'x: <b>{point.x:%y-%m-%d %H:%M:%S}</b><br/>y: <b>{point.y}</b><br/>',
+        },
       },
-      tooltip: {
-        pointFormat: 'x: <b>{point.x:%y-%m-%d %H:%M:%S}</b><br/>y: <b>{point.y}</b><br/>',
-      },
-    }],
-  };
+    ]);
+  }
 
   if (applicationState && options.series) {
     options.series = options.series.concat([{
@@ -198,6 +214,34 @@ export default ({
       yAxis: 3,
       visible: false,
       color: '#AFB42B',
+    }, {
+      name: 'Volume',
+      type: 'line',
+      data: applicationState.volume,
+      yAxis: 4,
+      visible: false,
+      color: '#00E08E',
+    }, {
+      name: 'Volume Average',
+      type: 'line',
+      data: applicationState.volumeAverage,
+      yAxis: 4,
+      visible: false,
+      color: '#00E08E',
+    }, {
+      name: 'Volume Upper Limit',
+      type: 'line',
+      data: applicationState.volumeUpperLimit,
+      yAxis: 4,
+      visible: false,
+      color: '#00E08E',
+    }, {
+      name: 'Volume Lower Limit',
+      type: 'line',
+      data: applicationState.volumeLowerLimit,
+      yAxis: 4,
+      visible: false,
+      color: '#00E08E',
     }]);
   }
 

@@ -6,25 +6,30 @@ export interface ApplicationStateAggregatedByDate {
     hour?: number;
     minute?: number;
   };
-  price:number;
+  price: number;
   priceAverage: number;
   priceStandardDeviation: number;
   priceUpperLimit: number;
   priceLowerLimit: number;
 
-  change:number;
+  change: number;
   changeAverage: number;
   changeStandardDeviation: number;
   changeUpperLimit: number;
   changeLowerLimit: number;
 
-  acceleration:number;
+  acceleration: number;
   accelerationAverage: number;
   accelerationStandardDeviation: number;
   accelerationUpperLimit: number;
   accelerationLowerLimit: number;
 
-  accountAmount:number;
+  volume: number;
+  volumeAverage: number;
+  volumeUpperLimit: number;
+  volumeLowerLimit: number;
+
+  accountAmount: number;
 }
 
 export interface ApplicationState {
@@ -45,6 +50,11 @@ export interface ApplicationState {
   accelerationStandardDeviation: [number, number][]
   accelerationUpperLimit: [number, number][]
   accelerationLowerLimit: [number, number][]
+
+  volume: [number, number][]
+  volumeAverage: [number, number][];
+  volumeUpperLimit: [number, number][];
+  volumeLowerLimit: [number, number][];
 
   accountAmount: [number, number][]
 }
@@ -68,6 +78,11 @@ export default (data: ApplicationStateAggregatedByDate[]): ApplicationState => {
     accelerationStandardDeviation: [],
     accelerationUpperLimit: [],
     accelerationLowerLimit: [],
+
+    volume: [],
+    volumeAverage: [],
+    volumeUpperLimit: [],
+    volumeLowerLimit: [],
 
     accountAmount: [],
   };
@@ -101,6 +116,11 @@ export default (data: ApplicationStateAggregatedByDate[]): ApplicationState => {
           final.accelerationStandardDeviation.push([time, applicationState.accelerationStandardDeviation]);
           final.accelerationUpperLimit.push([time, applicationState.accelerationUpperLimit]);
           final.accelerationLowerLimit.push([time, applicationState.accelerationLowerLimit]);
+
+          final.volume.push([time, applicationState.volume]);
+          final.volumeAverage.push([time, applicationState.volumeAverage]);
+          final.volumeUpperLimit.push([time, applicationState.volumeUpperLimit]);
+          final.volumeLowerLimit.push([time, applicationState.volumeLowerLimit]);
 
           final.accountAmount.push([time, applicationState.accountAmount]);
 

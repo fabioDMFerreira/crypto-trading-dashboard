@@ -12,7 +12,10 @@ export interface BenchmarkOutput {
   finalAmount: number,
   buys: [number, number][],
   sells: [number, number][],
-  assets: Asset[]
+  assets: Asset[],
+  lastPrice: number,
+  assetsValuePending: number,
+  assetsAmountPending: number,
 }
 
 export interface Benchmark {

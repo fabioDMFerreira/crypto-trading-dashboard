@@ -65,7 +65,7 @@ export default ({ benchmark }: Props) => {
       </div>
       <div className="mb-5">
         {
-          prices && sells && buys && applicationState
+          prices && applicationState
           && (
             <Chart
               prices={prices}

@@ -29,8 +29,25 @@ export default ({ benchmarks, deleteBenchmark, selectBenchmark }: Props) => {
         accessor: 'input.accountInitialAmount',
       },
       {
+        Header: 'Final Total',
+        accessor: '',
+        Cell: (cell: any) => (
+          <p>
+            {
+              cell && cell.row.original && cell.row.original.output
+                ? cell.row.original.output.finalAmount + cell.row.original.output.assetsValuePending
+                : ''
+            }
+          </p>
+        ),
+      },
+      {
         Header: 'Final Amount',
         accessor: 'output.finalAmount',
+      },
+      {
+        Header: 'Assets Value Pending',
+        accessor: 'output.assetsValuePending',
       },
       {
         Header: 'Assets Bought',
@@ -45,6 +62,14 @@ export default ({ benchmarks, deleteBenchmark, selectBenchmark }: Props) => {
       {
         Header: 'Assets Pending',
         accessor: 'output.sellsPending',
+      },
+      {
+        Header: 'Assets Amount Pending',
+        accessor: 'output.assetsAmountPending',
+      },
+      {
+        Header: 'Last Asset Price',
+        accessor: 'output.lastPrice',
       },
       {
         Header: 'Status',
